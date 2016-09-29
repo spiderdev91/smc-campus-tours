@@ -419,3 +419,36 @@ function twentysixteen_widget_tag_cloud_args( $args ) {
 	return $args;
 }
 add_filter( 'widget_tag_cloud_args', 'twentysixteen_widget_tag_cloud_args' );
+
+function translate_appointments_to_campus_tours($translated_text, $text, $domain) {
+	if(is_admin() && 'booked' == $domain) {
+		$translated_text = str_replace(
+			array('appointment', 'appointments', 'Appointment', 'Appointments'),
+			array('campus tour', 'campus tours', 'Campus Tour', 'Campus Tours'),
+			$translated_text);
+	}
+	return $translated_text;
+}
+add_filter('gettext', 'translate_appointments_to_campus_tours', 20, 3);
+
+function translate_appointments_to_campus_tours_singular_plural($translation, $single, $plural, $number, $domain) {
+	if(is_admin() && 'booked' == $domain) {
+		$translation = str_replace(
+			array('appointment', 'appointments', 'Appointment', 'Appointments'),
+			array('campus tour', 'campus tours', 'Campus Tour', 'Campus Tours'),
+			$translation);
+	}
+  return $translation;
+}
+add_filter('ngettext', 'translate_appointments_to_campus_tours_singular_plural', 20, 5);
+
+function translate_appointments_to_campus_tours_with_context($translation, $text, $context, $domain) {
+	if(is_admin() && 'booked' == $domain) {
+		$translation = str_replace(
+			array('appointment', 'appointments', 'Appointment', 'Appointments'),
+			array('campus tour', 'campus tours', 'Campus Tour', 'Campus Tours'),
+			$translation);
+	}
+  return $translation;
+}
+add_filter('gettext_with_context', 'translate_appointments_to_campus_tours_with_context', 20, 4);
